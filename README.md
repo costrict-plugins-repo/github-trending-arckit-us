@@ -1,0 +1,46 @@
+# ArcKit — USA Federal Civilian Overlay
+
+10 slash commands and the `us-federal` build recipe covering US Federal Civilian agency compliance:
+
+- `/arckit:us-fisma-categorization` — FIPS 199 categorization (NIST SP 800-60 information types)
+- `/arckit:us-nist-800-53` — NIST SP 800-53 Rev 5 tailoring against Low / Moderate / High baselines
+- `/arckit:us-fedramp-ssp` — FedRAMP System Security Plan (Moderate / High, 14 sections mapped to the FedRAMP Rev 5 SSP template)
+- `/arckit:us-fedramp-readiness` — internal readiness self-assessment in the FedRAMP 3PAO Readiness Assessment Report format + recommended certification route (type, path, class)
+- `/arckit:us-zero-trust` — CISA Zero Trust Maturity Model v2.0 across 5 pillars + 3 cross-cuts
+- `/arckit:us-icam` — OMB M-19-17 / NIST SP 800-63-3 IAL/AAL/FAL (PIV + login.gov integration)
+- `/arckit:us-ai-rmf` — NIST AI RMF 1.0 (Govern/Map/Measure/Manage) + Generative AI Profile (AI 600-1)
+- `/arckit:us-ai-impact` — OMB M-25-21 high-impact AI determination and minimum practices + M-25-22 acquisition terms
+- `/arckit:us-privacy-pia` — E-Gov Act §208 PIA + OMB M-03-22 + Privacy Act §552a SORN trigger
+- `/arckit:us-sbom-eo-14028` — EO 14028 + OMB M-26-05 secure-software evidence (the attestation form where the agency uses it) + SBOM to the CISA 2026 Minimum Elements
+
+Recipe: `us-federal` (5 waves: baseline → controls → posture → ai → authorization).
+
+## Requires arckit core plugin
+
+```bash
+claude plugin install arckit arckit-us
+```
+
+On Claude Code v2.1.143+, `claude plugin disable arckit` will refuse with a copy-pasteable disable-chain hint while `arckit-us` is enabled. Without `arckit` (core), the recipe will not resolve foundation commands (`arckit:principles`, `arckit:requirements`, etc.) and `validate-arc-filename` will not recognise US doc-type codes (`FIPS199`, `NIST`, `FRSSP`, `FRRR`, `ZTA`, `ICAM`, `AIRMF`, `AIIA`, `USPIA`, `SBOM`).
+
+## Scope
+
+**In scope (v1)**: Federal civilian agencies and the vendors that sell to them.
+
+**Out of scope**: Federal defense (CMMC / RMF / DISA STIGs), state regimes (StateRAMP / TX-RAMP / CJIS), sector-specific (HIPAA / GLBA / SOX / PCI), Section 508 accessibility (deferred to v2). Each is a candidate sibling overlay.
+
+## Regulatory anchors
+
+FIPS 199 / SP 800-60 Vol 2 · NIST SP 800-53 Rev 5 / SP 800-53B · FedRAMP Rev 5 / 3PAO Readiness · CISA Zero Trust Maturity Model v2.0 · OMB M-22-09 (Federal Zero Trust) · OMB M-19-17 (ICAM) · NIST SP 800-63-3 (IAL/AAL/FAL) · NIST AI RMF 1.0 / NIST AI 600-1 (Generative AI Profile) · OMB M-25-21 (use of AI) · OMB M-25-22 (acquisition of AI) · OMB M-26-04 (LLM procurement) · OMB M-24-15 (FedRAMP) · E-Government Act of 2002 §208 · OMB M-03-22 (PIA guidance) · Privacy Act of 1974 (5 U.S.C. §552a) · EO 14028 / OMB M-26-05 (secure software; rescinded M-22-18 and M-23-16) · CISA 2026 Minimum Elements for SBOM.
+
+## Statutory currency
+
+EO 14110 (Safe, Secure, and Trustworthy AI) was **revoked January 2025**. The active AI assurance mandates are **OMB M-25-21** (use of AI), which rescinded and replaced M-24-10 on 3 April 2025, and **OMB M-25-22** (acquisition of AI), which replaced M-24-18. **OMB M-24-15** (July 2024) replaced the FedRAMP Joint Authorization Board with the FedRAMP Board; there is no JAB P-ATO path. FedRAMP completed the **Rev 5** transition in 2024 — Rev 4 references are deprecated throughout. **OMB M-26-05** (23 January 2026) rescinded M-22-18 and M-23-16: the secure-software attestation form and an SBOM on request are now each the agency's choice, not a government-wide requirement. Under the FedRAMP Consolidated Rules for 2026, FedRAMP stopped accepting FedRAMP Ready submissions on **28 July 2026** and marked the Rev 5 SSP template legacy; `us-fedramp-readiness` is an internal self-assessment and cannot confer FedRAMP Ready. Verify citations against the current Federal Register, OMB Circulars page, and FedRAMP.gov before relying on any artefact.
+
+## Data
+
+This overlay adds commands, templates and reference material only. It sends no data of its own, and it has no hooks and no MCP servers. Its commands run in Claude alongside the `arckit` core plugin, whose README lists what that plugin sends and when. Privacy policy: <https://arckit.org/privacy.html>.
+
+## Maintainer
+
+`[COMMUNITY]` — recruiting domain co-maintainer. Originally contributed in PR [pending].
